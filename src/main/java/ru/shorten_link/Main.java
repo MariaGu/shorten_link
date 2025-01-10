@@ -18,11 +18,17 @@ public class Main {
         printMenu();
         while (true) {
             String s = scanner.nextLine();
-            if (s.equals("3")) break;
-            else if (s.equals("1")) {
+
+            if (s.equals("5")) {
+                break;
+            } else if (s.equals("1")) {
                 browseLink(scanner, urlShortener);
             } else if (s.equals("2")) {
                 createShortLink(scanner, urlShortener);
+            } else if (s.equals("3")) {
+                editShortLink(scanner, urlShortener);
+            } else if (s.equals("4")) {
+                deleteShortLink(scanner, urlShortener);
             } else {
                 System.out.println("Операция не поддерживается");
                 printMenu();
@@ -45,11 +51,37 @@ public class Main {
 
         System.out.println("Введите длинную ссылку для преобразования:");
         String link = scanner.nextLine();
-        System.out.println("Задайте мксимальное количество переходов по ссылке:");
+        System.out.println("Задайте максимальное количество переходов по ссылке:");
         int browseLimit = Integer.parseInt(scanner.nextLine());
+        System.out.println("Задайте максимальное время существования ссылки в днях:");
+        int liveLimit = Integer.parseInt(scanner.nextLine());
 
-        String shortUrl = urlShortener.shortenUrl(userId, link, browseLimit);
+        String shortUrl = urlShortener.shortenUrl(userId, link, browseLimit, liveLimit);
         System.out.println("Ваша короткая ссылка: " + shortUrl);
+    }
+
+    private static void editShortLink(Scanner scanner, UrlShortener urlShortener) {
+        System.out.println("Введите ваш UUID:");
+        String userUUID = scanner.nextLine();
+        UUID userId = UUID.fromString(userUUID);
+
+        System.out.println("Введите коротку ссылку для преобразования:");
+        String link = scanner.nextLine();
+        System.out.println("Укажите новое значение числа переходов по ссылке:");
+        int browseNumber = Integer.parseInt(scanner.nextLine());
+
+        System.out.println(urlShortener.editCurrentVisits(userId, link, browseNumber));
+    }
+
+    private static void deleteShortLink(Scanner scanner, UrlShortener urlShortener) {
+        System.out.println("Введите ваш UUID:");
+        String userUUID = scanner.nextLine();
+        UUID userId = UUID.fromString(userUUID);
+
+        System.out.println("Введите коротку ссылку для удаления:");
+        String link = scanner.nextLine();
+
+        System.out.println(urlShortener.deleteLink(userId, link));
     }
 
     private static void browseLink(Scanner scanner, UrlShortener urlShortener) {
@@ -63,7 +95,9 @@ public class Main {
                 Введите команды:
                 '1' - для перехода по короткой ссылке;
                 '2' - для создания короткой ссылки;
-                '3' - для выхода из программы;
+                '3' - для редактирования ссылки (изменение числа переходов);
+                '4' - для удаления ссылки;
+                '5' - для выхода из программы;
                 """);
     }
 }

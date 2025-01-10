@@ -19,6 +19,10 @@ class ShortenedUrl {
         return originalUrl;
     }
 
+    public void setCurrentVisits(int currentVisits) {
+        this.currentVisits = currentVisits;
+    }
+
     public String getShortUrl() {
         return shortUrl;
     }
