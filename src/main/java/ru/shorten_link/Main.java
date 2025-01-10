@@ -18,8 +18,8 @@ public class Main {
         printMenu();
         while (true) {
             String s = scanner.nextLine();
-
             if (s.equals("5")) {
+                System.out.println("Завершение программы");
                 break;
             } else if (s.equals("1")) {
                 browseLink(scanner, urlShortener);
@@ -34,6 +34,7 @@ public class Main {
                 printMenu();
             }
         }
+        scanner.close();
     }
 
     private static void createShortLink(Scanner scanner, UrlShortener urlShortener) {
